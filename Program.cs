@@ -8,6 +8,9 @@ namespace Sudoku_solver
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine(Parser.BlankPuzzle());
+            Console.WriteLine(Parser.Peers());
+            var puzzle = Parser.ParseInitialPuzzle(SamplePuzzles.Sample1());
+            puzzle.Print();
         }
     }
 }
