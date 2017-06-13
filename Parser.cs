@@ -83,6 +83,7 @@ namespace Sudoku_solver
             for(int i =0;i<initial.Length;i++){
                 if(DIGITS.Contains(initial[i])){
                     blank[cellMap[i]]=initial[i].ToString();
+                    blank=blank.Assign(cellMap[i],initial[i].ToString());
                 }
             }
             return blank;
@@ -91,7 +92,7 @@ namespace Sudoku_solver
         public static void Print(this Dictionary<string,string> puzzle){
             Console.WriteLine();
             var width= 1+ puzzle.Values.Max(x => x.Length);
-            var partLine = string.Concat(Enumerable.Repeat("-", (width+1)*3));
+            var partLine = string.Concat(Enumerable.Repeat("-", (width)*3));
             var line = string.Concat(partLine, '+',partLine, '+',partLine);
             foreach(var r in ROWS.ToCharArray()){
                 var printRow="";
@@ -111,7 +112,7 @@ namespace Sudoku_solver
 
         public static string Center(this string input, int width){
             if(input.Length >= width) return input;
-            if(input.Length >= width+1) return string.Concat(input," ");
+            if(input.Length >= width-1) return string.Concat(input," ").Center(width);
             return string.Concat(" ",input," ").Center(width);
         }
     }

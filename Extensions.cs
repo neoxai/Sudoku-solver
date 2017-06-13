@@ -21,5 +21,13 @@ namespace Sudoku_solver
             }
             return toReturn;
         } 
+
+        public static Dictionary<string,string> Copy(this Dictionary<string,string> puzzle){
+            var toReturn= new Dictionary<string,string>();
+            foreach(var i in puzzle.Keys){
+                toReturn.Add(i,puzzle[i]);
+            }
+            return toReturn;
+        }
     }
 }
