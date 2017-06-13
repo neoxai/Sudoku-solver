@@ -7,6 +7,7 @@ namespace Sudoku_solver
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Console.WriteLine(Parser.BlankPuzzle());
         }
     }
 }
