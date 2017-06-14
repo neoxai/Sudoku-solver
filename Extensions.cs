@@ -23,6 +23,7 @@ namespace Sudoku_solver
         } 
 
         public static Dictionary<string,string> Copy(this Dictionary<string,string> puzzle){
+            if(puzzle == null) return null;
             var toReturn= new Dictionary<string,string>();
             foreach(var i in puzzle.Keys){
                 toReturn.Add(i,puzzle[i]+"");
@@ -31,6 +32,8 @@ namespace Sudoku_solver
         }
 
         public static int Diff(this Dictionary<string,string> puzzle, Dictionary<string,string> otherPuzzle){
+            if(otherPuzzle == null || puzzle == null) return 81;
+            
             var diffCount=0;
             foreach(var i in puzzle.Keys){
                 if(otherPuzzle.ContainsKey(i) && otherPuzzle[i]==puzzle[i]){
@@ -41,6 +44,20 @@ namespace Sudoku_solver
                 }
             }
             return diffCount;
+        }
+
+        public static Guess Copy(this Guess g){
+            return new Guess(){Cell=g.Cell, Value=g.Value};
+        }
+        public static IEnumerable<Guess> Copy(this IEnumerable<Guess> gs){
+            return gs.Select(x => x.Copy());
+        }
+
+        public static string Print(this IEnumerable<Guess> gs){
+            return string.Join("/",gs.Select(x => x.Print()));
+        }
+        public static string Print(this Guess g){
+            return $"{g.Cell}:{g.Value}";
         }
     }
 }
