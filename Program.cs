@@ -9,11 +9,7 @@ namespace Sudoku_solver
             Console.WriteLine("Hello World!");
             Console.WriteLine(Parser.BlankPuzzle());
             Console.WriteLine(Parser.Peers());
-            var puzzle = Parser.ParseInitialPuzzle(SamplePuzzles.Sample1()).EliminateAllSingletons();
-            puzzle.Print();
-            puzzle = puzzle.EliminateAllTwins();
-            puzzle.Print();
-            puzzle = puzzle.EliminateAllSingletons();
+            var puzzle = Parser.ParseInitialPuzzle(SamplePuzzles.HardPuzzle1()).RunConstraints();
             puzzle.Print();
         }
     }
