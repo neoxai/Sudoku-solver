@@ -4,18 +4,15 @@ using System.Linq;
 
 namespace Sudoku_solver
 {
-    public class SearchSpace{
-        public Dictionary<string,string> Puzzle {get;set;}
-        public IEnumerable<Guess> PreviousGuesses {get;set;}
-    }
 
-    public class Guess {
-        public string Cell {get;set;}
-        public string Value {get;set;}
+    public  interface ISearch{
+         Dictionary<string,string> GenerateNewSearches(Dictionary<string,string> puzzle);
+       
     }
-    public static class Search{
+    public  class Search : ISearch{
 
-        public static Dictionary<string,string> GenerateNewSearches(Dictionary<string,string> puzzle){
+
+        public  Dictionary<string,string> GenerateNewSearches(Dictionary<string,string> puzzle){
             return GenerateNewSearches(new SearchSpace(){
                 Puzzle=puzzle,
                 PreviousGuesses = new List<Guess>()
@@ -53,7 +50,7 @@ namespace Sudoku_solver
             });                
         }
         
-        public static Dictionary<string,string> BlindGuess(this Dictionary<string,string> puzzle, IEnumerable<string> alreadyTriedCells){
+        public static Dictionary<string,string> BlindGuess(Dictionary<string,string> puzzle, IEnumerable<string> alreadyTriedCells){
             if(puzzle == null) return null;
             if(puzzle.IsSolved()) return puzzle;
 
@@ -75,7 +72,7 @@ namespace Sudoku_solver
                             testPuzzle.Print();
                             return testPuzzle;
                         }
-                        return testPuzzle.BlindGuess(new List<string>());
+                        return BlindGuess(testPuzzle, new List<string>());
                     }
                     else{
                         Console.WriteLine("  Invalid after running constraints check. Trying next...");
@@ -92,7 +89,7 @@ namespace Sudoku_solver
                 
             }
 
-            return puzzle.BlindGuess(alreadyTriedCells.Concat(new List<string>{cell}));
+            return BlindGuess(puzzle, alreadyTriedCells.Concat(new List<string>{cell}));
         }
         public static string ChooseBestCellToGuess(Dictionary<string,string> puzzle,IEnumerable<string> alreadyTriedCells){
             if(puzzle == null) return "";
